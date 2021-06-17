@@ -99,6 +99,28 @@ class TileImage:
     
     def draw_ids(self):
         self.draw_tile_ids()
+    
+    def draw_tiles(self, spaces=False):
+        out_str = ''
+
+        tile_wh = len(self.tiles[0][0].rows[0])
+        img_wh = tile_wh * self.wh
+        for i in range(0, img_wh):
+            i_tile = int(math.floor(i/tile_wh))
+            i_tile_pos = i % tile_wh
+            if i_tile_pos == 0 and i != 0 and spaces:
+                out_str += ' ' * img_wh + '\n'
+            for j in range(0, img_wh):
+                j_tile = int(math.floor(j/tile_wh))
+                j_tile_pos = j % tile_wh
+                if j_tile_pos == 0 and j != 0 and spaces:
+                    out_str += ' '
+
+                char = self.tiles[i_tile][j_tile].rows[i_tile_pos][j_tile_pos]
+                out_str += char
+            out_str += '\n'
+        
+        print(out_str)
 
 
 
@@ -173,7 +195,6 @@ class Y2020D20Solver(BaseSolver):
         result = 1
         for tile_id, conn_count in conn_counts.items():
             if conn_count == Tile.CORNER_CONN_COUNT:
-                print(tile_id)
                 result *= tile_id
 
         return result
@@ -318,3 +339,7 @@ class Y2020D20Solver(BaseSolver):
                     pdb.set_trace()
                 img.tiles[i][j] = same_neighbours_no_used_up[0]
                 used_up_ids.append(same_neighbours_no_used_up[0].id)
+
+        img.draw_tiles()
+        import pdb
+        pdb.set_trace()
