@@ -1,8 +1,8 @@
 import os
 
-DIR = '/Users/tonisredanovic/Projects/advent-of-code/solvers/'
+DIR = '/path/to/solvers/dir/'
 
-years = [2020, 2019, 2018, 2017, 2016]
+years = [2021, 2020, 2019, 2018, 2017, 2016]
 days = [day for day in range(1, 26)]
 
 file_content_template = """
