@@ -5,8 +5,7 @@ DIR = '/path/to/solvers/dir/'
 years = [2021, 2020, 2019, 2018, 2017, 2016]
 days = [day for day in range(1, 26)]
 
-file_content_template = """
-from basesolver import BaseSolver
+file_content_template = """from basesolver import BaseSolver
 
 
 class Y{}D{:02d}Solver(BaseSolver):
@@ -16,7 +15,6 @@ class Y{}D{:02d}Solver(BaseSolver):
 
     def solve_part_b(self):
         return None
-
 """
 
 for year in years:

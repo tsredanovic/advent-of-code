@@ -1,4 +1,3 @@
-
 from basesolver import BaseSolver
 
 def get_next_value(value):

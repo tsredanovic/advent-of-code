@@ -1,4 +1,3 @@
-
 import pprint
 
 from basesolver import BaseSolver
