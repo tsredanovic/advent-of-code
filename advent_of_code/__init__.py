@@ -83,32 +83,3 @@ class Y{}D{:02d}Solver(BaseSolver):
             with solver_file_path.open("w", encoding ="utf-8") as f:
                 f.write(file_content_template.format(args.year, day))
             print('Day {:02d} structure created.'.format(day))
-
-
-# TODO delete after all migrations are good
-def migrate():
-    old_solvers_dir = BASE_DIR.parent / 'solvers'
-    for path in old_solvers_dir.iterdir():
-        if path.name.startswith('y'):
-            year = path.name.split('d')[0].lstrip('y')
-            day = path.name.split('d')[1].rstrip('.py')
-
-            new_path = BASE_DIR / year / day / path.name
-
-            path.rename(new_path)
-
-            print('Migrated year {} day {}'.format(year, day))
-
-# TODO delete after all migrations are good
-def migrate_data():
-    old_data_dir = BASE_DIR.parent / 'data' / 'aoctd'
-    for path in old_data_dir.iterdir():
-        if path.name.endswith('.txt'):
-            year = path.name.split('_')[0]
-            day = path.name.split('_')[1]
-
-            new_path = BASE_DIR / year / day / 'data' / path.name
-
-            path.rename(new_path)
-
-            print('Migrated {}'.format(path.name))
