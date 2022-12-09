@@ -12,5 +12,5 @@ __pycache__
 .DS_Store
 
 # Secrets
-data/token2id.json
+token2id.json
 .env
