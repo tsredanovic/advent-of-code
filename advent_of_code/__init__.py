@@ -42,13 +42,15 @@ class Solver:
         return solution
 
 def solve():
+    import pdb
+    pdb.set_trace()
     # Env vars
     load_dotenv()
 
     # Arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('year', type=int, help='year')
-    parser.add_argument('day', type=int, help='day')
+    parser.add_argument('day', type=int, help='day', choices=range(1, 26))
     parser.add_argument('part', type=str, choices=['a', 'b'], help='part')
     parser.add_argument('-d', '--data', required=False)
     args = parser.parse_args()
