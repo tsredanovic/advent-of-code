@@ -8,3 +8,4 @@ class Y2021D22Solver(BaseSolver):
 
     def solve_part_b(self):
         return None
+
