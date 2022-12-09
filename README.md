@@ -48,7 +48,7 @@ poetry run isort .
 
 ## Scripts
 
-### solve
+### **solve**
 
 Solve a puzzle.
 
@@ -77,7 +77,7 @@ Solve a puzzle for year 2022, day 1, part a with test input file `2022_01_1_inpu
 poetry run solve 2022 1 a -d 1
 ```
 
-### gen-empty-solvers
+### **gen-empty-solvers**
 
 Generate empty solvers.
 
