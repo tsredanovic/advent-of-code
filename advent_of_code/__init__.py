@@ -1,8 +1,6 @@
 import argparse
 import importlib
-import os
 from pathlib import Path
-#from advent_of_code.2022.01.y2022d01 import Y2022D01Solver
 from aocd import get_data
 
 from dotenv import load_dotenv
@@ -46,8 +44,6 @@ class Solver:
 def solve():
     # Env vars
     load_dotenv()
-    AOC_SESSION = os.getenv('AOC_SESSION')
-    AOCD_DIR = os.getenv('AOCD_DIR')
 
     # Arguments
     parser = argparse.ArgumentParser()
