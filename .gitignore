@@ -1,9 +1,16 @@
+# Virtual env
 venv
 .venv
+
+# IDE
 .idea
 .vscode
+
+# System files
 __pycache__
 *.pyc
 .DS_Store
-data/aocd/token2id.json
+
+# Secrets
+data/token2id.json
 .env

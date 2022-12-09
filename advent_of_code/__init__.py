@@ -1,7 +1,6 @@
 import argparse
 import importlib
 from pathlib import Path
-from aocd import get_data
 
 from dotenv import load_dotenv
 
@@ -11,6 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent
 def solve():
     # Env vars
     load_dotenv()
+    from aocd import get_data
 
     # Arguments
     parser = argparse.ArgumentParser()
@@ -30,6 +30,7 @@ def solve():
         data_path = solver_dir / 'data' / data_id
         with data_path.open('r', encoding='utf-8') as f:
             data = f.read()
+            data.rstrip("\r\n")
     else:
         # Get real data
         data = get_data(year=args.year, day=args.day)
