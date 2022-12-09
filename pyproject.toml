@@ -20,6 +20,7 @@ isort = "^5.10.1"
 solve = "advent_of_code:solve"
 gen-empty-solvers = "advent_of_code:generate_empty_solvers"
 migrate = "advent_of_code:migrate"
+migrate-data = "advent_of_code:migrate_data"
 
 [tool.isort]
 profile = "black"

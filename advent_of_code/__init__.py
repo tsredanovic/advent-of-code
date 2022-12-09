@@ -97,3 +97,17 @@ def migrate():
             path.rename(new_path)
 
             print('Migrated year {} day {}'.format(year, day))
+
+# TODO delete after all migrations are good
+def migrate_data():
+    old_data_dir = BASE_DIR.parent / 'data' / 'aoctd'
+    for path in old_data_dir.iterdir():
+        if path.name.endswith('.txt'):
+            year = path.name.split('_')[0]
+            day = path.name.split('_')[1]
+
+            new_path = BASE_DIR / year / day / 'data' / path.name
+
+            path.rename(new_path)
+
+            print('Migrated {}'.format(path.name))
