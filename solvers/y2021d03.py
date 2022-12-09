@@ -1,6 +1,6 @@
 import pprint
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 def get_bit_counts(lines):
     bit_counts = {}

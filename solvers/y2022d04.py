@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 class Elf:
     def __init__(self, range_str: str) -> None:

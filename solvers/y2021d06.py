@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 def get_next_value(value):
     if value == 0:

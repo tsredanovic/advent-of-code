@@ -1,6 +1,6 @@
 import math
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 pairs = {
     '(': ')',

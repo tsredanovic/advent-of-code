@@ -2,7 +2,7 @@ from typing import List
 
 from numpy import *
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 
 class Wire:

@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 def solve(starting_nums, final_i):
     last_num_spoken = starting_nums[-1]

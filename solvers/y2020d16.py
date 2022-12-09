@@ -1,6 +1,6 @@
 from itertools import groupby
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 class Rule:
     def __init__(self, index, line):

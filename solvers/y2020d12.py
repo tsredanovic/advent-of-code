@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
    
 def parse_cmd(line):
     action = line[0]

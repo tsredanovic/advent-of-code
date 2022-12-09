@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 def closest_left_index_of(string, char, search_i):
     while True:

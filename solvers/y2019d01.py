@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 def fuel_from_mass(mass):
     return int(mass/3)-2

@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 
 def calculate_output(input_list, pos_1_value, pos_2_value):

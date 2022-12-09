@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 class SeatingSystem:
     SEAT_EMPTY = 'L'

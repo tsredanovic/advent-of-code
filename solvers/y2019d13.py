@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 
 class Computer:

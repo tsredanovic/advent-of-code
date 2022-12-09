@@ -1,5 +1,5 @@
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 
 class Y2019D23Solver(BaseSolver):

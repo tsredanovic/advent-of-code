@@ -1,4 +1,4 @@
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 from solvers.y2021d11 import Map
 
 class Cavern(Map):

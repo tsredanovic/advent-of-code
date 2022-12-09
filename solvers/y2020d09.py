@@ -1,6 +1,6 @@
 import itertools
 
-from basesolver import BaseSolver
+from advent_of_code.basesolver import BaseSolver
 
 class XMAS:
     def __init__(self, numbers, preamble_length):
