@@ -28,7 +28,7 @@ def solve():
         if data_id.isdigit():
             data_id = '{}_{:02d}_{}_input.txt'.format(args.year, args.day, data_id)
         data_path = solver_dir / 'data' / data_id
-        with open(data_path, 'r') as f:
+        with data_path.open('r', encoding='utf-8') as f:
             data = f.read()
     else:
         # Get real data
@@ -56,5 +56,29 @@ def generate_empty_solvers():
     parser.add_argument('year', type=int, help='year')
     args = parser.parse_args()
 
-    import pdb
-    pdb.set_trace()
+    # Template
+    file_content_template = """from advent_of_code.basesolver import BaseSolver
+
+
+class Y{}D{:02d}Solver(BaseSolver):
+    def solve_part_a(self):
+        return None
+    
+
+    def solve_part_b(self):
+        return None
+"""
+
+    # Create
+    for day in range(1, 26):
+        solver_file_path = BASE_DIR / str(args.year) / '{:02d}'.format(day) / 'y{}d{:02d}.py'.format(args.year, day)
+
+        data_dir = solver_file_path.parent / 'data'
+        data_dir.mkdir(parents=True, exist_ok=True)
+
+        if solver_file_path.is_file():
+            print('Day {:02d} structure exists.'.format(day))
+        else:
+            with solver_file_path.open("w", encoding ="utf-8") as f:
+                f.write(file_content_template.format(args.year, day))
+            print('Day {:02d} structure created.'.format(day))
