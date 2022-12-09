@@ -1,8 +1,9 @@
 venv
+.venv
 .idea
+.vscode
 __pycache__
 *.pyc
-.env
 .DS_Store
-.vscode
 data/aocd/token2id.json
+.env
