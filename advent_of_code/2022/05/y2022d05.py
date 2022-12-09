@@ -1,21 +1,23 @@
 from advent_of_code.basesolver import BaseSolver
 
+
 class Stack:
     def __init__(self, id) -> None:
         self.id = id
         self.crates = []
-    
+
     def add_crate(self, crate: str) -> None:
         self.crates.append(crate)
-    
+
     def remove_crate(self):
         return self.crates.pop()
 
     def __str__(self) -> str:
-        return str('{}:{}'.format(self.id, self.crates))
-    
+        return str("{}:{}".format(self.id, self.crates))
+
     def __repr__(self) -> str:
         return str(self)
+
 
 def create_stacks(stacks_lines):
     stacks = {}
@@ -23,7 +25,7 @@ def create_stacks(stacks_lines):
         current_i = 1
         while current_i <= len(stack_line):
             value = stack_line[current_i]
-            if value == ' ':
+            if value == " ":
                 current_i += 4
                 continue
 
@@ -37,12 +39,13 @@ def create_stacks(stacks_lines):
             current_i += 4
     return stacks
 
+
 def parse_move_line(move_line):
-    ids_str = move_line.split(' from ')[1]
-    from_id = int(ids_str.split(' to ')[0])
-    to_id = int(ids_str.split(' to ')[1])
-    count_str = move_line.split(' from ')[0]
-    count = int(count_str.split(' ')[1])
+    ids_str = move_line.split(" from ")[1]
+    from_id = int(ids_str.split(" to ")[0])
+    to_id = int(ids_str.split(" to ")[1])
+    count_str = move_line.split(" from ")[0]
+    count = int(count_str.split(" ")[1])
     return from_id, to_id, count
 
 
@@ -58,6 +61,7 @@ def move_crates(stacks, from_id, to_id, count, multiple=False):
     for crate in removed_crates:
         to_stack.add_crate(crate)
 
+
 def get_top_crates(stacks):
     ids = [id for id in stacks.keys()]
     ids.sort()
@@ -67,6 +71,7 @@ def get_top_crates(stacks):
         top_crate = stack.crates[-1]
         top_crates.append(top_crate)
     return top_crates
+
 
 class Y2022D05Solver(BaseSolver):
     def solve_part_a(self):
@@ -80,7 +85,7 @@ class Y2022D05Solver(BaseSolver):
             move_crates(stacks, from_id, to_id, count)
 
         top_crates = get_top_crates(stacks)
-        return ''.join(top_crates)
+        return "".join(top_crates)
 
     def solve_part_b(self):
         stacks_lines = self.chunks()[0]
@@ -93,4 +98,4 @@ class Y2022D05Solver(BaseSolver):
             move_crates(stacks, from_id, to_id, count, multiple=True)
 
         top_crates = get_top_crates(stacks)
-        return ''.join(top_crates)
+        return "".join(top_crates)

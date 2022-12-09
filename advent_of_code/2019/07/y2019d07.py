@@ -43,15 +43,15 @@ class Computer:
     EQUALS = 8
     HALT = 99
     DESCRIPTION = {
-        ADD: 'ADD',
-        MULTIPLY: 'MULTIPLY',
-        INPUT: 'INPUT',
-        OUTPUT: 'OUTPUT',
-        JUMP_IF_TRUE: 'JUMP_IF_TRUE',
-        JUMP_IF_FALSE: 'JUMP_IF_FALSE',
-        LESS_THAN: 'LESS_THAN',
-        EQUALS: 'EQUALS',
-        HALT: 'HALT',
+        ADD: "ADD",
+        MULTIPLY: "MULTIPLY",
+        INPUT: "INPUT",
+        OUTPUT: "OUTPUT",
+        JUMP_IF_TRUE: "JUMP_IF_TRUE",
+        JUMP_IF_FALSE: "JUMP_IF_FALSE",
+        LESS_THAN: "LESS_THAN",
+        EQUALS: "EQUALS",
+        HALT: "HALT",
     }
 
     POSITION_MODE = 0
@@ -59,7 +59,7 @@ class Computer:
 
     def read_params(self, num_of_params):
         params = []
-        for i in range(1, num_of_params+1):
+        for i in range(1, num_of_params + 1):
             params.append(self.commands[self.current_position + i])
         return params
 
@@ -70,20 +70,20 @@ class Computer:
             return param
 
     def execute_opcode_action(self, opcode, modes):
-        #print('\tOpcode: {} ({}) | Modes: {}'.format(opcode, self.DESCRIPTION[opcode], modes))
+        # print('\tOpcode: {} ({}) | Modes: {}'.format(opcode, self.DESCRIPTION[opcode], modes))
         if opcode == self.HALT:
             self.result = self.commands[0]
-            #print('\tHALT')
+            # print('\tHALT')
         elif opcode == self.ADD:
             """
             Opcode 1 adds together numbers read from two positions and stores the result in a third position.
             The three integers immediately after the opcode tell you these three positions
-            - the first two indicate the positions from which you should read the input values, 
+            - the first two indicate the positions from which you should read the input values,
             and the third indicates the position at which the output should be stored.
             """
             num_of_params = 3
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             value0 = self.get_value_based_on_mode(modes[0], params[0])
             value1 = self.get_value_based_on_mode(modes[1], params[1])
@@ -99,7 +99,7 @@ class Computer:
             """
             num_of_params = 3
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             value0 = self.get_value_based_on_mode(modes[0], params[0])
             value1 = self.get_value_based_on_mode(modes[1], params[1])
@@ -110,12 +110,12 @@ class Computer:
 
         elif opcode == self.INPUT:
             """
-            Opcode 3 takes a single integer as input and saves it to the address given by its only parameter. 
+            Opcode 3 takes a single integer as input and saves it to the address given by its only parameter.
             For example, the instruction 3,50 would take an input value and store it at address 50.
             """
             num_of_params = 1
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             self.commands[params[0]] = self.inputs[self.current_input_position]
             self.current_input_position += 1
@@ -124,12 +124,12 @@ class Computer:
 
         elif opcode == self.OUTPUT:
             """
-            Opcode 4 outputs the value of its only parameter. 
+            Opcode 4 outputs the value of its only parameter.
             For example, the instruction 4,50 would output the value at address 50.
             """
             num_of_params = 1
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             value0 = self.get_value_based_on_mode(modes[0], params[0])
 
@@ -141,13 +141,13 @@ class Computer:
 
         elif opcode == self.JUMP_IF_TRUE:
             """
-            Opcode 5 is jump-if-true: 
-            if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter. 
+            Opcode 5 is jump-if-true:
+            if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter.
             Otherwise, it does nothing.
             """
             num_of_params = 2
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             value0 = self.get_value_based_on_mode(modes[0], params[0])
             value1 = self.get_value_based_on_mode(modes[1], params[1])
@@ -159,13 +159,13 @@ class Computer:
 
         elif opcode == self.JUMP_IF_FALSE:
             """
-            Opcode 6 is jump-if-false: 
-            if the first parameter is zero, it sets the instruction pointer to the value from the second parameter. 
+            Opcode 6 is jump-if-false:
+            if the first parameter is zero, it sets the instruction pointer to the value from the second parameter.
             Otherwise, it does nothing.
             """
             num_of_params = 2
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             value0 = self.get_value_based_on_mode(modes[0], params[0])
             value1 = self.get_value_based_on_mode(modes[1], params[1])
@@ -177,14 +177,14 @@ class Computer:
 
         elif opcode == self.LESS_THAN:
             """
-            Opcode 7 is less than: 
-            if the first parameter is less than the second parameter, 
-            it stores 1 in the position given by the third parameter. 
+            Opcode 7 is less than:
+            if the first parameter is less than the second parameter,
+            it stores 1 in the position given by the third parameter.
             Otherwise, it stores 0.
             """
             num_of_params = 3
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             value0 = self.get_value_based_on_mode(modes[0], params[0])
             value1 = self.get_value_based_on_mode(modes[1], params[1])
@@ -198,14 +198,14 @@ class Computer:
 
         elif opcode == self.EQUALS:
             """
-            Opcode 8 is equals: 
-            if the first parameter is equal to the second parameter, 
-            it stores 1 in the position given by the third parameter. 
+            Opcode 8 is equals:
+            if the first parameter is equal to the second parameter,
+            it stores 1 in the position given by the third parameter.
             Otherwise, it stores 0.
             """
             num_of_params = 3
             params = self.read_params(num_of_params)
-            #print('\tParams: {}'.format(params))
+            # print('\tParams: {}'.format(params))
 
             value0 = self.get_value_based_on_mode(modes[0], params[0])
             value1 = self.get_value_based_on_mode(modes[1], params[1])
@@ -218,9 +218,8 @@ class Computer:
             self.current_position += num_of_params + 1
 
         else:
-            print('INVALID OPCODE: {}'.format(opcode))
+            print("INVALID OPCODE: {}".format(opcode))
             exit(-1)
-
 
     def extract_opcode(self, instruction):
         instruction_str = str(instruction).zfill(5)
@@ -234,13 +233,13 @@ class Computer:
 
     def process_commands(self):
         while True:
-            #commands_before = list(enumerate(self.commands))
-            #print(commands_before)
+            # commands_before = list(enumerate(self.commands))
+            # print(commands_before)
             if self.current_position >= len(self.commands):
                 return False
 
             current_instruction = self.commands[self.current_position]
-            #print('Position: {} | Instruction: {}'.format(self.current_position, current_instruction))
+            # print('Position: {} | Instruction: {}'.format(self.current_position, current_instruction))
             current_opcode = self.extract_opcode(current_instruction)
             current_modes = self.extract_modes(current_instruction)
             possible_output = self.execute_opcode_action(current_opcode, current_modes)
@@ -249,12 +248,12 @@ class Computer:
             if current_opcode == self.HALT:
                 return True
 
-            #commands_after = list(enumerate(self.commands))
-            #print(set(commands_after) - set(commands_before))
+            # commands_after = list(enumerate(self.commands))
+            # print(set(commands_after) - set(commands_before))
 
 
 def load_input(data):
-    return [int(x.strip()) for x in data.split(',')]
+    return [int(x.strip()) for x in data.split(",")]
 
 
 def test_phase_settings(one_phase_settings, input_list):
@@ -271,30 +270,33 @@ def test_phase_settings(one_phase_settings, input_list):
         if counter == 5:
             first_iteration = False
         current_index = counter % 5
-        #print('Amplifier: {}'.format(current_index))
+        # print('Amplifier: {}'.format(current_index))
         previous_index = counter % 5 - 1 if current_index != 0 else 4
 
         amplifier = amplifiers[current_index]
 
         first_input = one_phase_settings[current_index]
-        second_input = amplifiers[previous_index].outputs[-1] if amplifiers[previous_index].outputs else 0
+        second_input = (
+            amplifiers[previous_index].outputs[-1]
+            if amplifiers[previous_index].outputs
+            else 0
+        )
 
         if first_iteration:
             current_inputs = [first_input, second_input]
         else:
             current_inputs = [second_input]
 
-
-        #print('\tCurrent position: {}'.format(amplifier.current_position))
-        #print('\tCommands: {}'.format(amplifier.commands))
-        #print('\tInputs: {}'.format(current_inputs))
+        # print('\tCurrent position: {}'.format(amplifier.current_position))
+        # print('\tCommands: {}'.format(amplifier.commands))
+        # print('\tInputs: {}'.format(current_inputs))
 
         amplifier.load_inputs(current_inputs)
         succ = amplifier.process_commands()
-        #print('\tProcessing commands...')
-        #print('\tCurrent position: {}'.format(amplifier.current_position))
-        #print('\tCommands: {}'.format(amplifier.commands))
-        #print('\tOutputs: {}'.format(amplifier.outputs))
+        # print('\tProcessing commands...')
+        # print('\tCurrent position: {}'.format(amplifier.current_position))
+        # print('\tCommands: {}'.format(amplifier.commands))
+        # print('\tOutputs: {}'.format(amplifier.outputs))
         if succ == True and amplifier == amplifiers[-1]:
             return amplifiers[-1].outputs[-1]
 
@@ -307,7 +309,10 @@ class Y2019D07Solver(BaseSolver):
 
         phase_settings_nums = [0, 1, 2, 3, 4]
 
-        all_phase_settings = [list(one_phase_settings) for one_phase_settings in list(itertools.permutations(phase_settings_nums))]
+        all_phase_settings = [
+            list(one_phase_settings)
+            for one_phase_settings in list(itertools.permutations(phase_settings_nums))
+        ]
 
         final_outputs = {}
         for one_phase_settings in all_phase_settings:
@@ -317,7 +322,7 @@ class Y2019D07Solver(BaseSolver):
                 computer = Computer()
                 computer.load_commands(input_list)
 
-                current_output = 0 if i == 0 else amplifiers[i-1].outputs[0]
+                current_output = 0 if i == 0 else amplifiers[i - 1].outputs[0]
                 current_inputs = [one_phase_settings[i], current_output]
 
                 computer.load_inputs(current_inputs)
@@ -329,13 +334,15 @@ class Y2019D07Solver(BaseSolver):
 
         return max(final_outputs.values())
 
-    
     def solve_part_b(self):
         input_list = load_input(self.data)
 
         phase_settings_nums = [5, 6, 7, 8, 9]
 
-        all_phase_settings = [list(one_phase_settings) for one_phase_settings in list(itertools.permutations(phase_settings_nums))]
+        all_phase_settings = [
+            list(one_phase_settings)
+            for one_phase_settings in list(itertools.permutations(phase_settings_nums))
+        ]
 
         final_outputs = {}
         for one_phase_settings in all_phase_settings:
@@ -344,7 +351,6 @@ class Y2019D07Solver(BaseSolver):
             except Exception as e:
                 result = 0
             final_outputs[tuple(one_phase_settings)] = result
-            print('{} : {}'.format(tuple(one_phase_settings), result))
-
+            print("{} : {}".format(tuple(one_phase_settings), result))
 
         return max(final_outputs.values())

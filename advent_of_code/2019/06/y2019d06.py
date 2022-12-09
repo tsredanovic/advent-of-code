@@ -36,7 +36,9 @@ class Planet:
         neighbours = [self]
         while True:
             new_neighbours = []
-            neighbours = [neighbour for neighbour in neighbours if neighbour not in checked]
+            neighbours = [
+                neighbour for neighbour in neighbours if neighbour not in checked
+            ]
             for neighbour in neighbours:
                 if planet.id == neighbour.id:
                     return distance
@@ -48,7 +50,9 @@ class Planet:
             neighbours = new_neighbours
 
     def __str__(self):
-        return '{}->{} ({})'.format(self.id, self.parent.id if self.parent else None, self.depth())
+        return "{}->{} ({})".format(
+            self.id, self.parent.id if self.parent else None, self.depth()
+        )
 
     def __repr__(self):
         return str(self)
@@ -61,7 +65,7 @@ def load_input(lines):
 def create_planets(content):
     planets = []
     for line in content:
-        two_panet_ids = line.split(')')
+        two_panet_ids = line.split(")")
         parent_id = two_panet_ids[0]
         child_id = two_panet_ids[1]
         parent = get_planet_by_id(planets, parent_id)
@@ -91,15 +95,12 @@ class Y2019D06Solver(BaseSolver):
             total_depth += planet.depth()
         return total_depth
 
-
     def solve_part_b(self):
         input_lines = load_input(self.lines)
 
         planets = create_planets(input_lines)
 
-        planet1 = get_planet_by_id(planets, 'YOU').parent
-        planet2 = get_planet_by_id(planets, 'SAN').parent
+        planet1 = get_planet_by_id(planets, "YOU").parent
+        planet2 = get_planet_by_id(planets, "SAN").parent
 
         return planet1.distance_to(planets, planet2)
-
-

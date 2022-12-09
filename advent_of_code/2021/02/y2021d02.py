@@ -9,15 +9,14 @@ class Y2021D02Solver(BaseSolver):
         for line in self.lines:
             direction, num = line.split()
             num = int(num)
-            if direction == 'forward':
+            if direction == "forward":
                 horizontal += num
-            elif direction == 'up':
+            elif direction == "up":
                 depth -= num
-            elif direction == 'down':
+            elif direction == "down":
                 depth += num
 
         return horizontal * depth
-    
 
     def solve_part_b(self):
         horizontal = 0
@@ -27,12 +26,11 @@ class Y2021D02Solver(BaseSolver):
         for line in self.lines:
             direction, num = line.split()
             num = int(num)
-            if direction == 'forward':
+            if direction == "forward":
                 horizontal += num
                 depth += aim * num
-            elif direction == 'up':
+            elif direction == "up":
                 aim -= num
-            elif direction == 'down':
+            elif direction == "down":
                 aim += num
         return horizontal * depth
-

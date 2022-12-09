@@ -19,10 +19,10 @@ class Password:
         """
         str_num = str(self.num)
         for i in range(len(str_num)):
-            if i+1 == len(str_num):
+            if i + 1 == len(str_num):
                 break
             current_digit = str_num[i]
-            next_digit = str_num[i+1]
+            next_digit = str_num[i + 1]
             if current_digit == next_digit:
                 return True
         return False
@@ -34,7 +34,7 @@ class Password:
         str_num = str(self.num)
         for i in range(len(str_num)):
             current_digit = int(str_num[i])
-            right_of_current_digits = [int(digit) for digit in str_num[i+1:]]
+            right_of_current_digits = [int(digit) for digit in str_num[i + 1 :]]
 
             for rocd in right_of_current_digits:
                 if rocd < current_digit:
@@ -49,16 +49,25 @@ class Password:
         str_num = str(self.num)
         isolated_same_double_digits = 0
         for i in range(len(str_num)):
-            if i+1 == len(str_num):
+            if i + 1 == len(str_num):
                 break
             current_digit = str_num[i]
-            next_digit = str_num[i+1]
+            next_digit = str_num[i + 1]
             if current_digit == next_digit:
-                left_border_index = i-1
-                right_border_index = i+2
-                left_border_digit = str_num[left_border_index] if left_border_index >= 0 else None
-                right_border_digit = str_num[right_border_index] if right_border_index < len(str_num) else None
-                if current_digit == left_border_digit or current_digit == right_border_digit:
+                left_border_index = i - 1
+                right_border_index = i + 2
+                left_border_digit = (
+                    str_num[left_border_index] if left_border_index >= 0 else None
+                )
+                right_border_digit = (
+                    str_num[right_border_index]
+                    if right_border_index < len(str_num)
+                    else None
+                )
+                if (
+                    current_digit == left_border_digit
+                    or current_digit == right_border_digit
+                ):
                     continue
                 isolated_same_double_digits += 1
 
@@ -80,8 +89,7 @@ class Password:
 
 def load_input(data):
     content = data.strip()
-    return [int(num) for num in content.split('-')]
-
+    return [int(num) for num in content.split("-")]
 
 
 class Y2019D04Solver(BaseSolver):
@@ -89,21 +97,18 @@ class Y2019D04Solver(BaseSolver):
         start, end = load_input(self.data)
 
         possible_pwd_cnt = 0
-        for num in range(start, end+1):
+        for num in range(start, end + 1):
             if Password(num).is_valid_part_1():
                 possible_pwd_cnt += 1
 
         return possible_pwd_cnt
 
-
     def solve_part_b(self):
         start, end = load_input(self.data)
 
         possible_pwd_cnt = 0
-        for num in range(start, end+1):
+        for num in range(start, end + 1):
             if Password(num).is_valid_part_2():
                 possible_pwd_cnt += 1
 
         return possible_pwd_cnt
-
-

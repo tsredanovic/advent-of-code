@@ -1,4 +1,3 @@
-
 from advent_of_code.basesolver import BaseSolver
 
 
@@ -15,14 +14,14 @@ class Slope:
 
 
 class TreeMap:
-    TREE_CHAR = '#'
-    BLANK_CHAR = '.'
+    TREE_CHAR = "#"
+    BLANK_CHAR = "."
 
     def __init__(self, lines):
         self.w = len(lines[0])
         self.h = len(lines)
         self.trees_dict = self.read_where_trees_are(lines, self.w, self.h)
-    
+
     def read_where_trees_are(self, lines, w, h):
         trees_dict = {}
         for i in range(w):
@@ -34,7 +33,7 @@ class TreeMap:
                 elif char_at_pos == self.BLANK_CHAR:
                     trees_dict[pos] = 0
         return trees_dict
-    
+
     def is_tree_at(self, pos):
         x = pos[0]
         x = x % self.w
@@ -43,9 +42,9 @@ class TreeMap:
             return True
         else:
             return False
-    
+
     def __str__(self):
-        tree_map = ''
+        tree_map = ""
         for j in range(self.h):
             for i in range(self.w):
                 pos = (i, j)
@@ -53,12 +52,10 @@ class TreeMap:
                     tree_map += self.TREE_CHAR
                 else:
                     tree_map += self.BLANK_CHAR
-            
-            tree_map += '\n'
+
+            tree_map += "\n"
         return tree_map
 
-
-    
     def __repr__(self):
         return self.__str__()
 
@@ -75,15 +72,15 @@ class Y2020D03Solver(BaseSolver):
 
         return trees_counter
 
-
     def solve_part_a(self):
         tree_map = TreeMap(self.lines)
         current_pos = (0, 0)
         slope = Slope(3, 1)
-        trees_on_slope = self.check_slope(tree_map, current_pos, slope.move_x, slope.move_y)
+        trees_on_slope = self.check_slope(
+            tree_map, current_pos, slope.move_x, slope.move_y
+        )
 
         return str(trees_on_slope)
-    
 
     def solve_part_b(self):
         tree_map = TreeMap(self.lines)
@@ -91,7 +88,9 @@ class Y2020D03Solver(BaseSolver):
         slopes = [Slope(1, 1), Slope(3, 1), Slope(5, 1), Slope(7, 1), Slope(1, 2)]
         result = 1
         for slope in slopes:
-            trees_on_slope = self.check_slope(tree_map, current_pos, slope.move_x, slope.move_y)
+            trees_on_slope = self.check_slope(
+                tree_map, current_pos, slope.move_x, slope.move_y
+            )
             result *= trees_on_slope
-        
+
         return str(result)

@@ -2,6 +2,7 @@ import pprint
 
 from advent_of_code.basesolver import BaseSolver
 
+
 class Board:
     def __init__(self, lines) -> None:
         for i in range(len(lines)):
@@ -31,15 +32,15 @@ class Board:
                 win_col_positions.append((j, i))
             win_positions.append(win_row_positions)
             win_positions.append(win_col_positions)
-        
+
         self.win_positions = win_positions
 
     def __str__(self) -> str:
         return pprint.pformat(self.number_lines)
-    
+
     def __repr__(self) -> str:
         return str(self)
-    
+
     def mark_position(self, number) -> bool:
         if not self.numbers_dict.get(number):
             return False
@@ -47,7 +48,7 @@ class Board:
             return True
         self.marked_positions.append(self.numbers_dict[number])
         return True
-    
+
     def check_win(self):
         if len(self.marked_positions) < 5:
             return False, None
@@ -57,7 +58,7 @@ class Board:
                 return True, win_position
 
         return False, None
-    
+
     def unmarked_sum(self):
         score = 0
         for i in range(len(self.number_lines)):
@@ -66,7 +67,7 @@ class Board:
                     number = self.number_lines[i][j]
                     score += number
         return score
-    
+
     def draws_to_win(self, drawn_numbers):
         for drawn_number_i, drawn_num in enumerate(drawn_numbers):
             number_marked = self.mark_position(drawn_num)
@@ -75,11 +76,12 @@ class Board:
                 if won:
                     return drawn_number_i, drawn_num
 
+
 def generate_boards(lines):
     if not lines[0]:
         lines = lines[1:]
     if lines[-1]:
-        lines.append('')
+        lines.append("")
     all_boards_lines = []
     current_board_lines = []
     for line in lines:
@@ -88,16 +90,17 @@ def generate_boards(lines):
             current_board_lines = []
         else:
             current_board_lines.append(line)
-    
+
     boards = []
     for board_lines in all_boards_lines:
         boards.append(Board(board_lines))
 
     return boards
 
+
 class Y2021D04Solver(BaseSolver):
     def solve_part_a(self):
-        drawn_numbers = [int(num) for num in self.lines[0].split(',')]
+        drawn_numbers = [int(num) for num in self.lines[0].split(",")]
         boards = generate_boards(self.lines[2:])
 
         for drawn_num in drawn_numbers:
@@ -107,10 +110,9 @@ class Y2021D04Solver(BaseSolver):
                     won, win_position = board.check_win()
                     if won:
                         return board.unmarked_sum() * drawn_num
-    
 
     def solve_part_b(self):
-        drawn_numbers = [int(num) for num in self.lines[0].split(',')]
+        drawn_numbers = [int(num) for num in self.lines[0].split(",")]
         boards = generate_boards(self.lines[2:])
 
         high_draws_to_win = -1
@@ -124,5 +126,3 @@ class Y2021D04Solver(BaseSolver):
                 high_draws_to_win_number = won_on_number
         high_draws_to_win_board = boards[high_draws_to_win_board_i]
         return high_draws_to_win_board.unmarked_sum() * high_draws_to_win_number
-
-

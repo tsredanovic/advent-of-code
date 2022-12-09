@@ -12,17 +12,23 @@ class Map:
 
     def is_between(self, asteroid1, asteroid2, asteroid):
         # is asteroid between asteroid1 and asteroid2
-        crossproduct = (asteroid.y - asteroid1.y) * (asteroid2.x - asteroid1.x) - (asteroid.x - asteroid1.x) * (asteroid2.y - asteroid1.y)
+        crossproduct = (asteroid.y - asteroid1.y) * (asteroid2.x - asteroid1.x) - (
+            asteroid.x - asteroid1.x
+        ) * (asteroid2.y - asteroid1.y)
 
         # compare versus epsilon for floating point values, or != 0 if using integers
         if abs(crossproduct) > sys.float_info.epsilon:
             return False
 
-        dotproduct = (asteroid.x - asteroid1.x) * (asteroid2.x - asteroid1.x) + (asteroid.y - asteroid1.y) * (asteroid2.y - asteroid1.y)
+        dotproduct = (asteroid.x - asteroid1.x) * (asteroid2.x - asteroid1.x) + (
+            asteroid.y - asteroid1.y
+        ) * (asteroid2.y - asteroid1.y)
         if dotproduct < 0:
             return False
 
-        squaredlengthba = (asteroid2.x - asteroid1.x) * (asteroid2.x - asteroid1.x) + (asteroid2.y - asteroid1.y) * (asteroid2.y - asteroid1.y)
+        squaredlengthba = (asteroid2.x - asteroid1.x) * (asteroid2.x - asteroid1.x) + (
+            asteroid2.y - asteroid1.y
+        ) * (asteroid2.y - asteroid1.y)
         if dotproduct > squaredlengthba:
             return False
 
@@ -48,7 +54,7 @@ class Map:
         for i, asteroid in enumerate(self.asteroids, 1):
             asteroid_sees = self.sees(asteroid)
             asteroid.sees = asteroid_sees
-            #print('Calculated sees: {}/{}'.format(i, len(self.asteroids)))
+            # print('Calculated sees: {}/{}'.format(i, len(self.asteroids)))
 
     def get_asteroid_by_coords(self, x, y):
         for asteroid in self.asteroids:
@@ -65,37 +71,39 @@ class Map:
         return all_asteroids_between
 
     def distance(self, asteroid1, asteroid2):
-        return math.sqrt(((asteroid1.x - asteroid2.x) ** 2) + ((asteroid1.y - asteroid2.y) ** 2))
+        return math.sqrt(
+            ((asteroid1.x - asteroid2.x) ** 2) + ((asteroid1.y - asteroid2.y) ** 2)
+        )
 
     def destroy_asteroid(self, asteroid):
         self.asteroids.remove(asteroid)
 
     def draw(self):
-        result = ''
+        result = ""
         for y in range(self.h):
             for x in range(self.w):
                 map_asteroid = self.get_asteroid_by_coords(x, y)
                 if map_asteroid:
-                    result += '#'
+                    result += "#"
                 else:
-                    result += '.'
-            result += '\n'
+                    result += "."
+            result += "\n"
         print(result.strip())
 
     def draw_asteroid(self, asteroid):
-        result = ''
+        result = ""
         for y in range(self.h):
             for x in range(self.w):
                 map_asteroid = self.get_asteroid_by_coords(x, y)
                 if map_asteroid == asteroid:
-                    result += 'X'
+                    result += "X"
                 elif map_asteroid in asteroid.sees:
-                    result += 'O'
+                    result += "O"
                 elif map_asteroid:
-                    result += '#'
+                    result += "#"
                 else:
-                    result += '.'
-            result += '\n'
+                    result += "."
+            result += "\n"
         print(result.strip())
 
     def __str__(self):
@@ -112,7 +120,7 @@ class Asteroid:
         self.sees = None
 
     def __str__(self):
-        return '({}, {})'.format(self.x, self.y)
+        return "({}, {})".format(self.x, self.y)
 
     def __repr__(self):
         return str(self)
@@ -127,10 +135,8 @@ def create_map(content):
 
     for y, line in enumerate(content):
         for x, char in enumerate(line):
-            if char == '#':
-                map.asteroids.append(
-                    Asteroid(x, y)
-                )
+            if char == "#":
+                map.asteroids.append(Asteroid(x, y))
     return map
 
 
@@ -138,21 +144,21 @@ def clockwiseangle_and_distance(point):
     global origin
     global refvec
     # Vector between point and the origin: v = p - o
-    vector = [point.x-origin.x, point.y-origin.y]
+    vector = [point.x - origin.x, point.y - origin.y]
     # Length of vector: ||v||
     lenvector = math.hypot(vector[0], vector[1])
     # If length is zero there is no angle
     if lenvector == 0:
         return -math.pi, 0
     # Normalize vector: v/||v||
-    normalized = [vector[0]/lenvector, vector[1]/lenvector]
-    dotprod  = normalized[0]*refvec[0] + normalized[1]*refvec[1]     # x1*x2 + y1*y2
-    diffprod = refvec[1]*normalized[0] - refvec[0]*normalized[1]     # x1*y2 - y1*x2
+    normalized = [vector[0] / lenvector, vector[1] / lenvector]
+    dotprod = normalized[0] * refvec[0] + normalized[1] * refvec[1]  # x1*x2 + y1*y2
+    diffprod = refvec[1] * normalized[0] - refvec[0] * normalized[1]  # x1*y2 - y1*x2
     angle = math.atan2(diffprod, dotprod)
     # Negative angles represent counter-clockwise angles so we need to subtract them
     # from 2*pi (360 degrees)
     if angle < 0:
-        return 2*math.pi+angle, lenvector
+        return 2 * math.pi + angle, lenvector
     # I return first the angle because that's the primary sorting criterium
     # but if two vectors have the same angle then the shorter distance should come first.
     return angle, lenvector
@@ -166,9 +172,11 @@ def order_asteroids_clockwise(asteroids):
     else:
         return list(reversed(sorted_asteroids))
 
+
 max_sees_asteroid = None
 origin = None
 refvec = None
+
 
 class Y2019D10Solver(BaseSolver):
     def solve_part_a(self):
@@ -183,10 +191,9 @@ class Y2019D10Solver(BaseSolver):
             if len(asteroid.sees) > len(max_sees_asteroid.sees):
                 max_sees_asteroid = asteroid
 
-        print('{}: sees {}'.format(max_sees_asteroid, len(max_sees_asteroid.sees)))
+        print("{}: sees {}".format(max_sees_asteroid, len(max_sees_asteroid.sees)))
 
         return len(max_sees_asteroid.sees)
-    
 
     def solve_part_b(self):
         global max_sees_asteroid
@@ -203,7 +210,7 @@ class Y2019D10Solver(BaseSolver):
             if len(asteroid.sees) > len(max_sees_asteroid.sees):
                 max_sees_asteroid = asteroid
 
-        print('Station at: {}'.format(max_sees_asteroid))
+        print("Station at: {}".format(max_sees_asteroid))
 
         origin = max_sees_asteroid
         refvec = [0, -1]
@@ -211,18 +218,18 @@ class Y2019D10Solver(BaseSolver):
         rotation = 0
         destroyed_asteroids = []
         while True:
-            #print('Rotation: {}'.format(rotation))
-            #map.draw_asteroid(max_sees_asteroid)
+            # print('Rotation: {}'.format(rotation))
+            # map.draw_asteroid(max_sees_asteroid)
             if len(map.asteroids) == 1:
                 break
             clockwise_asteroids = order_asteroids_clockwise(max_sees_asteroid.sees)
-            #print('Destroying:', clockwise_asteroids)
+            # print('Destroying:', clockwise_asteroids)
             for asteroid in clockwise_asteroids:
                 map.destroy_asteroid(asteroid)
                 destroyed_asteroids.append(asteroid)
 
                 if len(destroyed_asteroids) == 200:
-                    return destroyed_asteroids[-1].x*100 + destroyed_asteroids[-1].y
+                    return destroyed_asteroids[-1].x * 100 + destroyed_asteroids[-1].y
 
             map.calculate_asteroids_sees()
             rotation += 1

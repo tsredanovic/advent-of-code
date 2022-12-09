@@ -1,12 +1,13 @@
 from advent_of_code.basesolver import BaseSolver
 
+
 class Paper:
     def __init__(self, lines) -> None:
         self.pos_list = []
         for line in lines:
-            x, y = line.split(',')
+            x, y = line.split(",")
             self.pos_list.append((int(x), int(y)))
-        
+
         self._width = None
         self._height = None
 
@@ -18,7 +19,7 @@ class Paper:
                 max_x = pos[0]
             if pos[1] > max_y:
                 max_y = pos[1]
-        
+
         self._width = max_x + 1
         self._height = max_y + 1
 
@@ -33,21 +34,21 @@ class Paper:
         if not self._height:
             self.calculate_wh()
         return self._height
-    
+
     def count_dots(self):
         dots_count = 0
         for y in range(self.height):
             for x in range(self.width):
-                if (x,y) not in self.pos_list:
+                if (x, y) not in self.pos_list:
                     dots_count += 1
         return dots_count
 
     def __str__(self) -> str:
-        paper_str = ''
+        paper_str = ""
         for y in range(self.height):
             for x in range(self.width):
-                paper_str += '#' if (x,y) in self.pos_list else '.'
-            paper_str += '\n'
+                paper_str += "#" if (x, y) in self.pos_list else "."
+            paper_str += "\n"
         return paper_str.strip()
 
     def __repr__(self) -> str:
@@ -114,7 +115,7 @@ class Y2021D13Solver(BaseSolver):
         fold_lines = []
         is_paper_lines = True
         for line in self.lines:
-            if line == '':
+            if line == "":
                 is_paper_lines = False
                 continue
             if is_paper_lines:
@@ -122,19 +123,19 @@ class Y2021D13Solver(BaseSolver):
             else:
                 fold_lines.append(line)
         current_paper = Paper(paper_lines)
-        #print('Initial paper:')
-        #print(current_paper)
-        
+        # print('Initial paper:')
+        # print(current_paper)
+
         for fold_line in fold_lines[:1]:
-            #print(fold_line)
-            x_or_y = fold_line.split()[-1].split('=')[0]
-            fold_at = int(fold_line.split()[-1].split('=')[1])
-            if x_or_y == 'y':
+            # print(fold_line)
+            x_or_y = fold_line.split()[-1].split("=")[0]
+            fold_at = int(fold_line.split()[-1].split("=")[1])
+            if x_or_y == "y":
                 current_paper = current_paper.horizontal_fold(fold_at)
             else:
                 current_paper = current_paper.vertical_fold(fold_at)
-            #print(current_paper)
-        
+            # print(current_paper)
+
         return len(current_paper.pos_list)
 
     def solve_part_b(self):
@@ -142,7 +143,7 @@ class Y2021D13Solver(BaseSolver):
         fold_lines = []
         is_paper_lines = True
         for line in self.lines:
-            if line == '':
+            if line == "":
                 is_paper_lines = False
                 continue
             if is_paper_lines:
@@ -150,18 +151,17 @@ class Y2021D13Solver(BaseSolver):
             else:
                 fold_lines.append(line)
         current_paper = Paper(paper_lines)
-        #print('Initial paper:')
-        #print(current_paper)
-        
+        # print('Initial paper:')
+        # print(current_paper)
+
         for fold_line in fold_lines:
-            #print(fold_line)
-            x_or_y = fold_line.split()[-1].split('=')[0]
-            fold_at = int(fold_line.split()[-1].split('=')[1])
-            if x_or_y == 'y':
+            # print(fold_line)
+            x_or_y = fold_line.split()[-1].split("=")[0]
+            fold_at = int(fold_line.split()[-1].split("=")[1])
+            if x_or_y == "y":
                 current_paper = current_paper.horizontal_fold(fold_at)
             else:
                 current_paper = current_paper.vertical_fold(fold_at)
-            #print(current_paper)
-        
-        return '\n' + str(current_paper)
+            # print(current_paper)
 
+        return "\n" + str(current_paper)

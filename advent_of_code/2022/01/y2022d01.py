@@ -7,7 +7,6 @@ class Y2022D01Solver(BaseSolver):
         for chunk in self.chunks(type=int):
             elf_sums.append(sum(chunk))
         return max(elf_sums)
-    
 
     def solve_part_b(self):
         elf_sums = []

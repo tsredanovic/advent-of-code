@@ -10,9 +10,8 @@ class Y2020D01Solver(BaseSolver):
             if combination[0] + combination[1] == 2020:
                 result = combination[0] * combination[1]
                 break
-        
+
         return str(result)
-    
 
     def solve_part_b(self):
         result = None
@@ -20,5 +19,5 @@ class Y2020D01Solver(BaseSolver):
             if combination[0] + combination[1] + combination[2] == 2020:
                 result = combination[0] * combination[1] * combination[2]
                 break
-        
+
         return str(result)

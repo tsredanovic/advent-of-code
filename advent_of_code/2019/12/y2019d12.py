@@ -11,13 +11,8 @@ def load_input(lines):
 def create_moons(content):
     moons = []
     for line in content:
-        xyz = [int(coord.split('=')[1]) for coord in line.strip('<>').split(', ')]
-        moons.append(
-            Moon(
-                Position(xyz[0], xyz[1], xyz[2]),
-                Velocity(0, 0, 0)
-            )
-        )
+        xyz = [int(coord.split("=")[1]) for coord in line.strip("<>").split(", ")]
+        moons.append(Moon(Position(xyz[0], xyz[1], xyz[2]), Velocity(0, 0, 0)))
     return moons
 
 
@@ -26,7 +21,7 @@ class Jupiter:
         self.moons = moons
 
     def __str__(self):
-        return '{}'.format(self.moons)
+        return "{}".format(self.moons)
 
     def __repr__(self):
         return str(self)
@@ -83,16 +78,16 @@ class Jupiter:
         return total_energy
 
     def hashes_by_plane(self, plane):
-        hash = ''
+        hash = ""
         for moon in self.moons:
             hash += moon.hash_by_plane(plane)
         return hash
 
     def nice_print(self):
-        result = ''
+        result = ""
         for moon in self.moons:
-            result += str(moon) + '\n'
-        result += 'Total energy: {}'.format(self.total_energy())
+            result += str(moon) + "\n"
+        result += "Total energy: {}".format(self.total_energy())
         print(result.strip())
 
 
@@ -102,7 +97,9 @@ class Moon:
         self.velocity = velocity
 
     def __str__(self):
-        return 'pos={} vel={} pot={} kin={}'.format(self.position, self.velocity, self.potential_energy(), self.kinetic_energy())
+        return "pos={} vel={} pot={} kin={}".format(
+            self.position, self.velocity, self.potential_energy(), self.kinetic_energy()
+        )
 
     def __repr__(self):
         return str(self)
@@ -131,13 +128,12 @@ class Moon:
         return self.potential_energy() * self.kinetic_energy()
 
     def hash_by_plane(self, plane):
-        if plane == 'x':
-            return 'pos={} vel={}'.format(self.position.x, self.velocity.x)
-        elif plane == 'y':
-            return 'pos={} vel={}'.format(self.position.y, self.velocity.y)
-        elif plane == 'z':
-            return 'pos={} vel={}'.format(self.position.z, self.velocity.z)
-
+        if plane == "x":
+            return "pos={} vel={}".format(self.position.x, self.velocity.x)
+        elif plane == "y":
+            return "pos={} vel={}".format(self.position.y, self.velocity.y)
+        elif plane == "z":
+            return "pos={} vel={}".format(self.position.z, self.velocity.z)
 
 
 class Position:
@@ -147,7 +143,7 @@ class Position:
         self.z = z
 
     def __str__(self):
-        return '({}, {} ,{})'.format(self.x, self.y, self.z)
+        return "({}, {} ,{})".format(self.x, self.y, self.z)
 
     def __repr__(self):
         return str(self)
@@ -160,14 +156,14 @@ class Velocity:
         self.z = z
 
     def __str__(self):
-        return '({}, {} ,{})'.format(self.x, self.y, self.z)
+        return "({}, {} ,{})".format(self.x, self.y, self.z)
 
     def __repr__(self):
         return str(self)
 
 
 def compute_lcm(x, y):
-    return abs(x*y) // math.gcd(x, y)
+    return abs(x * y) // math.gcd(x, y)
 
 
 class Y2019D12Solver(BaseSolver):
@@ -185,14 +181,14 @@ class Y2019D12Solver(BaseSolver):
             step += 1
 
             if step == 1000:
-                print('Step: {}'.format(step))
+                print("Step: {}".format(step))
                 return jupiter.total_energy()
 
     def solve_part_b(self):
         input_content = load_input(self.lines)
 
         steps_for_plane = {}
-        for plane in ['x', 'y', 'z']:
+        for plane in ["x", "y", "z"]:
             moons = create_moons(input_content)
 
             jupiter = Jupiter(moons)
@@ -202,7 +198,7 @@ class Y2019D12Solver(BaseSolver):
             step = 0
             while True:
                 if step % 1000 == 0:
-                    print('Step: {}'.format(step))
+                    print("Step: {}".format(step))
                 previous_jupiters.append(jupiter.hashes_by_plane(plane))
                 jupiter.apply_gravities()
                 jupiter.apply_velocities()
@@ -210,12 +206,10 @@ class Y2019D12Solver(BaseSolver):
 
                 if jupiter.hashes_by_plane(plane) in previous_jupiters:
                     steps_for_plane[plane] = step
-                    print('Step: {} <- {}'.format(step, plane))
+                    print("Step: {} <- {}".format(step, plane))
                     break
 
         print(steps_for_plane)
-        lcm1 = compute_lcm(steps_for_plane['x'], steps_for_plane['y'])
-        lcm2 = compute_lcm(lcm1, steps_for_plane['z'])
+        lcm1 = compute_lcm(steps_for_plane["x"], steps_for_plane["y"])
+        lcm2 = compute_lcm(lcm1, steps_for_plane["z"])
         return lcm2
-
-

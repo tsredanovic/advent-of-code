@@ -1,4 +1,3 @@
-
 from advent_of_code.basesolver import BaseSolver
 
 
@@ -48,10 +47,10 @@ def load_input(data):
 
 
 def create_image(w, h, content):
-    pixels_per_layer = w*h
+    pixels_per_layer = w * h
     layers_per_image = len(content) / pixels_per_layer
     if int(layers_per_image) != layers_per_image:
-        print('Something goofed! Layers per image should be int.')
+        print("Something goofed! Layers per image should be int.")
     layers_per_image = int(layers_per_image)
     rows_per_layer = h
 
@@ -77,17 +76,18 @@ def create_image(w, h, content):
 
     return image
 
+
 def print_layer(layer):
-    result = ''
+    result = ""
     for row in layer.rows:
-        row_result = ''
+        row_result = ""
         for pixel_v in row:
             if pixel_v == 1:
-                row_result += '#'
+                row_result += "#"
             elif pixel_v == 0:
-                row_result += '.'
-        result += row_result + '\n'
-    return '\n{}'.format(result.strip())
+                row_result += "."
+        result += row_result + "\n"
+    return "\n{}".format(result.strip())
 
 
 class Y2019D08Solver(BaseSolver):
@@ -102,7 +102,6 @@ class Y2019D08Solver(BaseSolver):
                 min_0_layer = layer
 
         return min_0_layer.num_of(1) * min_0_layer.num_of(2)
-    
 
     def solve_part_b(self):
         content = load_input(self.data)

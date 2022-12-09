@@ -36,20 +36,17 @@ def calculate_output(input_list, pos_1_value, pos_2_value):
 
 class Y2019D02Solver(BaseSolver):
     def solve_part_a(self):
-        input_list = [int(x.strip()) for x in self.data.split(',')]
+        input_list = [int(x.strip()) for x in self.data.split(",")]
         return calculate_output(input_list, 12, 2)
-    
 
     def solve_part_b(self):
         desired_output = 19690720
 
         for noun in range(0, 100):
             for verb in range(0, 100):
-                input_list = [int(x.strip()) for x in self.data.split(',')]
+                input_list = [int(x.strip()) for x in self.data.split(",")]
 
                 output = calculate_output(input_list, noun, verb)
 
                 if output == desired_output:
                     return 100 * noun + verb
-
-
