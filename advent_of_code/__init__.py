@@ -42,8 +42,6 @@ class Solver:
         return solution
 
 def solve():
-    import pdb
-    pdb.set_trace()
     # Env vars
     load_dotenv()
 
