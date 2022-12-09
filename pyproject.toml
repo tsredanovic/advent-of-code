@@ -18,6 +18,7 @@ isort = "^5.10.1"
 
 [tool.poetry.scripts]
 solve = "advent_of_code:solve"
+gen-empty-solvers = "advent_of_code:generate_empty_solvers"
 
 [tool.isort]
 profile = "black"
