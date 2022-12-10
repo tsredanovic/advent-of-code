@@ -35,7 +35,7 @@ class DeviceState:
 
 class Device:
     def __init__(self) -> None:
-        self.cycle = 1
+        self.cycle = 0
         self.X = 1
         self.states = []
         self.save_state()
@@ -62,6 +62,39 @@ class Device:
         self.save_state()
 
 
+class Screen:
+    def __init__(self) -> None:
+        self.w = 40
+        self.h = 6
+        self.values = {}
+        for y in range(self.h):
+            for x in range(self.w):
+                self.values[(x, y)] = "?"
+
+    def set_value(self, x, y, value):
+        self.values[(x, y)] = value
+
+    def print(self):
+        line = ""
+        for y in range(self.h):
+            for x in range(self.w):
+                value = self.values[(x, y)]
+                line += str(value)
+            print(line)
+            line = ""
+
+    def print_str(self):
+        lines = []
+        line = ""
+        for y in range(self.h):
+            for x in range(self.w):
+                value = self.values[(x, y)]
+                line += str(value)
+            lines.append(line)
+            line = ""
+        return "\n".join(lines)
+
+
 class Y2022D10Solver(BaseSolver):
     def solve_part_a(self):
         cmds = Cmd.cmds_from_input(self.lines)
@@ -80,4 +113,20 @@ class Y2022D10Solver(BaseSolver):
         return result
 
     def solve_part_b(self):
-        return None
+        cmds = Cmd.cmds_from_input(self.lines)
+        device = Device()
+        screen = Screen()
+        for cmd in cmds:
+            device.execute_cmd(cmd)
+
+        y = 0
+        for state in device.states:
+            draw_pixel_at = (state.cycle % 40, y)
+            print(state, draw_pixel_at)
+            sprite_positions = [(state.X - 1, y), (state.X, y), (state.X + 1, y)]
+            value = "#" if draw_pixel_at in sprite_positions else "."
+            screen.set_value(draw_pixel_at[0], draw_pixel_at[1], value)
+
+            if state.cycle % 40 == 0 and state.cycle != 0:
+                y += 1
+        return screen.print_str()
