@@ -75,13 +75,7 @@ class Screen:
         self.values[(x, y)] = value
 
     def print(self):
-        line = ""
-        for y in range(self.h):
-            for x in range(self.w):
-                value = self.values[(x, y)]
-                line += str(value)
-            print(line)
-            line = ""
+        print(self.print_str())
 
     def print_str(self):
         lines = []
