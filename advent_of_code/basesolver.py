@@ -5,7 +5,6 @@ class NotImplementedError(Exception):
 class BaseSolver:
     def __init__(self, data, part):
         self.data = data
-
         self.part = part
 
     @property
