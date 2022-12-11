@@ -35,11 +35,6 @@ class Monkey:
         self.test_false_monkey_id = test_false_monkey_id
         self.inspection_count = 0
 
-        self.items_factors = []
-        for item in self.items:
-            item_factors = list(factors(item))
-            self.items_factors.append(item_factors)
-
     def monkey_from_chunk(chunk):
         id = int(chunk[0].split(' ')[1].rstrip(':'))
 
