@@ -35,6 +35,11 @@ class Monkey:
         self.test_false_monkey_id = test_false_monkey_id
         self.inspection_count = 0
 
+        self.items_factors = []
+        for item in self.items:
+            item_factors = list(factors(item))
+            self.items_factors.append(item_factors)
+
     def monkey_from_chunk(chunk):
         id = int(chunk[0].split(' ')[1].rstrip(':'))
 
@@ -63,13 +68,14 @@ class Monkey:
 
 class Y2022D11Solver(BaseSolver):
     def solve_part_a(self):
+        ROUND_COUNT = 20
+
         monkeys = {}
         for chunk in self.chunks():
             monkey = Monkey.monkey_from_chunk(chunk)
             #monkey.print()
             monkeys[monkey.id] = monkey
 
-        ROUND_COUNT = 20
         monkey_ids_sorted = sorted(monkeys.keys())
         for round in range(ROUND_COUNT):
             #print('ROUND {}'.format(round))
@@ -94,4 +100,33 @@ class Y2022D11Solver(BaseSolver):
         return sorted_inspection_counts[-1] * sorted_inspection_counts[-2]
 
     def solve_part_b(self):
-        return None
+        ROUND_COUNT = 10000
+
+        monkeys = {}
+        for chunk in self.chunks():
+            monkey = Monkey.monkey_from_chunk(chunk)
+            #monkey.print()
+            monkeys[monkey.id] = monkey
+
+        monkey_ids_sorted = sorted(monkeys.keys())
+        for round in range(ROUND_COUNT):
+            #print('ROUND {}'.format(round))
+            for monkey_id in monkey_ids_sorted:
+                monkey = monkeys[monkey_id]
+                monkey_items = monkey.items.copy()
+                monkey.items = []
+                for item in monkey_items:
+                    monkey.inspection_count += 1
+                    new_item = monkey.operation.execute(item)
+                    if (new_item / monkey.test_div_by).is_integer():
+                        throw_to_monkey_id = monkey.test_true_monkey_id
+                    else:
+                        throw_to_monkey_id = monkey.test_false_monkey_id
+                    monkeys[throw_to_monkey_id].items.append(new_item)
+
+            #for monkey_id in monkey_ids_sorted:
+            #    monkey = monkeys[monkey_id]
+            #    monkey.print_items()
+        
+        sorted_inspection_counts = sorted(monkey.inspection_count for monkey in monkeys.values())
+        return sorted_inspection_counts[-1] * sorted_inspection_counts[-2]
