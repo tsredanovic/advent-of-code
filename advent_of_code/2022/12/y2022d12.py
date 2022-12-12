@@ -78,6 +78,14 @@ class Map:
         sorted_unvisited_points = sorted(unvisited_points, key=lambda point: point.distance)
         return sorted_unvisited_points[0]
 
+    def turn_S_into_a(self):
+        for point in self.points.values():
+            if point.char == 'S':
+                point.char = 'a'
+                point.distance = 2**10000
+                break
+
+
     def print(self):
         lines = []
         line = ""
@@ -102,12 +110,7 @@ class Map:
         return Map(points, start_point, end_point)
 
 class Y2022D12Solver(BaseSolver):
-    def solve_part_a(self):
-        map = Map.map_from_lines(self.lines)
-        #map.print()
-        #for point in map.points.values():
-        #    print('{} -> {} -> {}'.format(point, map.point_neighbors_positions(point), [point.char for point in map.point_neighbors(point)]))
-
+    def solve(self, map):
         current_point = map.start_point
         while True:
             #print('Current point: {}'.format(current_point))
@@ -121,5 +124,31 @@ class Y2022D12Solver(BaseSolver):
                 return current_point.distance
             current_point = map.get_next_point()
 
+    def solve_part_a(self):
+        map = Map.map_from_lines(self.lines)
+        return self.solve(map)
+
     def solve_part_b(self):
-        return None
+        map = Map.map_from_lines(self.lines)
+        map.turn_S_into_a()
+
+        # find all a points
+        a_points_positions = []
+        for point in map.points.values():
+            if point.char == 'a':
+                a_points_positions.append(point.pos)
+        
+        a_points_count = len(a_points_positions)
+
+        min_distance = 2**10000
+        for i, a_point_position in enumerate(a_points_positions, 1):
+            print('Solving {}/{}'.format(i, a_points_count))
+            map = Map.map_from_lines(self.lines)
+            map.turn_S_into_a()
+            map.start_point = map.points[a_point_position]
+            map.start_point.distance = 0
+            distance = self.solve(map)
+            if distance < min_distance:
+                min_distance = distance
+
+        return min_distance
