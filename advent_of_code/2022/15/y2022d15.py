@@ -2,6 +2,11 @@ from advent_of_code.basesolver import BaseSolver
 
 MAX_INT = 2**10000
 
+
+def manhattan_distance_2d(p1, p2):
+    return abs(p2.x - p1.x) + abs(p2.y - p1.y)
+
+
 class Point:
     def __init__(self, x, y) -> None:
         self.x = x
@@ -23,6 +28,22 @@ class Sensor(Point):
         self.x = x
         self.y = y
         self.closest_beacon = closest_beacon
+        self.closest_beacon_manhattan_distance = manhattan_distance_2d(self, closest_beacon)
+
+        self.no_beacon_points = {}
+        for d in range(self.closest_beacon_manhattan_distance):
+            inverse_d = self.closest_beacon_manhattan_distance - d
+            y_up = self.y - d
+            y_down = self.y + d
+            x_left = self.x - inverse_d
+            x_right = self.x + inverse_d
+            for x in range(x_left, x_right + 1):
+                point = Point(x, y_up)
+                if point.pos not in self.no_beacon_points.keys():
+                    self.no_beacon_points[point.pos] = point
+                point = Point(x, y_down)
+                if point.pos not in self.no_beacon_points.keys():
+                    self.no_beacon_points[point.pos] = point
 
 class Beacon(Point):
     pass
@@ -37,7 +58,15 @@ class Map:
         self.min_y = MAX_INT
         self.max_y = -MAX_INT
 
-        for pos in [pos for pos in self.sensors.keys()] + [pos for pos in self.beacons.keys()]:
+        self.no_beacon_points = {}
+        for sensor in self.sensors.values():
+            for no_beacon_point in sensor.no_beacon_points.values():
+                if no_beacon_point.pos not in self.no_beacon_points.keys():
+                    new_no_beacon_point = Point(no_beacon_point.x, no_beacon_point.y)
+                    self.no_beacon_points[new_no_beacon_point.pos] = new_no_beacon_point
+
+
+        for pos in [pos for pos in self.sensors.keys()] + [pos for pos in self.beacons.keys()] + [pos for pos in self.no_beacon_points.keys()]:
             x = pos[0]
             y = pos[1]
             if x < self.min_x:
@@ -86,6 +115,8 @@ class Map:
                     char = 'S'
                 elif self.beacons.get(pos):
                     char = 'B'
+                elif self.no_beacon_points.get(pos):
+                    char = '#'
                 line += char
             lines.append(line)
             line = ""
