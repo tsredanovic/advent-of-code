@@ -31,7 +31,7 @@ class Sensor(Point):
         self.closest_beacon_manhattan_distance = manhattan_distance_2d(self, closest_beacon)
 
         self.no_beacon_points = {}
-        for d in range(self.closest_beacon_manhattan_distance):
+        for d in range(self.closest_beacon_manhattan_distance + 1):
             inverse_d = self.closest_beacon_manhattan_distance - d
             y_up = self.y - d
             y_down = self.y + d
@@ -78,6 +78,13 @@ class Map:
             if y > self.max_y:
                 self.max_y = y
     
+    def no_beacon_points_count_at_y(self, y):
+        count = 0
+        for pos in self.no_beacon_points.keys():
+            if pos[1] == y and not self.beacons.get(pos):
+                count += 1
+        return count
+
     def map_from_lines(lines):
         sensors = {}
         beacons = {}
@@ -125,8 +132,9 @@ class Map:
 
 class Y2022D15Solver(BaseSolver):
     def solve_part_a(self):
+        y = 2000000
         map = Map.map_from_lines(self.lines)
-        map.print()
+        return map.no_beacon_points_count_at_y(y)
 
     def solve_part_b(self):
         return None
